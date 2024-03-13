@@ -1,0 +1,1 @@
+variable = "This is another module variable!"
