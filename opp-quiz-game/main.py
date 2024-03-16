@@ -1,22 +1,14 @@
-from random import Random
+from question_model import Questing
+from data import question_data
+from quiz_brain import Quiz_Brain
 
-class User:
-    # pass
-    def __init__(self, username: str) -> None:
-        random_generator = Random()
-        self.id = random_generator.randint(1, 1000)
-        self.username = username
-        self.followers = 0
-        self.following = 0
-    
-    def follow(self, user: 'User') -> None:
-        user.followers += 1
-        self.following += 1    
-    
-user_1 = User(username="Prithwish")
-user_2 = User(username="Ankana")
+question_bank: list[Questing] = []
+for question_set in question_data:
+    question_bank.append( Questing(question_set["question"], question_set["correct_answer"]))
 
-user_1.follow(user=user_2)
-print(user_1.following)
-print(user_2.followers)
 
+quiz = Quiz_Brain(question_bank)
+while quiz.still_has_question():
+    quiz.next_question()
+print("You have completed the quiz")
+print(f"Your final score was: {quiz.score}/{quiz.question_number}")
